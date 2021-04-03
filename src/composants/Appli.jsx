@@ -3,6 +3,8 @@ import Entete from './Entete';
 import ListeDossiers from './ListeDossiers';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button'
 import Accueil from './Accueil';
 import { useEffect, useState } from 'react';
 import AjouterDossier from './AjouterDossier';
@@ -19,6 +21,9 @@ export default function Appli() {
 
   // État de la boîte de dialogue "Ajout Dossier" (ouverte = true / fermée = false)
   const [ouvertAD, setOuvertAD] = useState(false);
+
+  // État de la boîte du dropdown pour trier les dossiers (ouverte = true / fermée = false)
+  const [dropdown, setDropdown] = useState(false);
 
   // Observer le changement d'état de la connexion utilisateur (FB-Auth)
   // Remarquez que ce code est dans un useEffect() car on veut l'exécuter 
@@ -57,6 +62,13 @@ export default function Appli() {
           <>
             <Entete utilisateur={utilisateur} />
             <section className="contenu-principal">
+
+              <Select onClick={() => setDropdown(true)} ouvertBoite={dropdown}>
+                <Button className="optionTri">Nom de dossier ascendant</Button>
+                <Button className="optionTri">Nom de dossier descendant</Button>
+                <Button className="optionTri">Date de modification descendante</Button>
+              </Select>
+
               <ListeDossiers utilisateur={utilisateur} etatDossiers={etatDossiers} />
               <AjouterDossier ouvert={ouvertAD} setOuvert={setOuvertAD} gererAjout={gererAjouter} />
               <Fab onClick={() => setOuvertAD(true)} className="ajoutRessource" color="primary" aria-label="Ajouter dossier">
